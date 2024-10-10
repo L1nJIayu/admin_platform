@@ -27,8 +27,7 @@ const Sidebar = () => {
   
   const navigate = useNavigate()
   const menuList = getMenuList(menu_routes)
-  console.log(menuList)
-  const firstMenuKey = menu_routes[0].path
+  const defaultSelectedKeys = menu_routes[0].path
 
   const handleRouteChange = (item) => {
     console.log(item)
@@ -39,8 +38,9 @@ const Sidebar = () => {
     <div className="side_bar">
       <Menu
         onClick={handleRouteChange}
-        defaultSelectedKeys={[firstMenuKey]}
-        items={menuList}></Menu>
+        defaultSelectedKeys={[defaultSelectedKeys]}
+        items={menuList}
+        mode="inline"></Menu>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './todoTable.scss'
 
-import { Table, Space } from 'antd'
+import { Table, Space, Tag } from 'antd'
 import { getTableDataApi } from '../../service/modules/todo'
 import { useCallback } from 'react'
 import { useEffect } from 'react'
@@ -17,7 +17,19 @@ const tableColumns = [
   },
   {
     title: '状态',
-    dataIndex: 'status'
+    dataIndex: 'status',
+    render: (status) => {
+      switch(status) {
+        case 0:
+          return <Tag color="default">未完成</Tag>
+        case 1:
+          return <Tag color="success">已完成</Tag>
+        case 2:
+          return <Tag color="error">已超期</Tag>
+        default:
+          return <Tag color="default">未知:{status}</Tag>
+      }
+    }
   },
   {
     title: '创建时间',
@@ -25,12 +37,15 @@ const tableColumns = [
   },
   {
     title: '操作',
-    dataIndex: 'actions',
-    render: (_, record) => {
-      <Space size="middle">
-        <a>修改</a>
-        <a>删除</a>
-      </Space>
+    dataIndex: 'id',
+    render: (id, row) => {
+      console.log(id, row)
+      return (
+        <Space size="middle">
+          <a>修改</a>
+          <a>删除</a>
+        </Space>
+      )
     }
   }
 ]
