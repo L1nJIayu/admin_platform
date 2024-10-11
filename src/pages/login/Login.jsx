@@ -15,7 +15,6 @@ const Login = () => {
 
   const login = async (value) => {
     try {
-      console.log(value)
       setLoading(true)
       const res = await loginApi(value)
       const { token } = res.data

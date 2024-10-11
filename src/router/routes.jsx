@@ -9,7 +9,7 @@ import {
 
 import Login from '../pages/login/Login'
 import Layout from '../layout/Layout'
-import LoadingMask from '../components/LoadingMask'
+import LoadingMask from '../components/loadingMask/LoadingMask'
 import { Suspense } from 'react'
 
 

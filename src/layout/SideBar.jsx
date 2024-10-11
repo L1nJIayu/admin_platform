@@ -30,7 +30,6 @@ const Sidebar = () => {
   const defaultSelectedKeys = menu_routes[0].path
 
   const handleRouteChange = (item) => {
-    console.log(item)
     navigate(item.key)
   }
 

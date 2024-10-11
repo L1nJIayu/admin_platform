@@ -41,7 +41,6 @@ const tableColumns = [
     title: '操作',
     dataIndex: 'id',
     render: (id, row) => {
-      console.log(id, row)
       return (
         <Space size="middle">
           <a>修改</a>
@@ -83,7 +82,6 @@ const UserTable = () => {
   }, [pageData.pageNum, pageData.pageSize])
 
   useEffect(() => {
-    console.log('getTableData')
     getTableData()
   }, [getTableData])
   

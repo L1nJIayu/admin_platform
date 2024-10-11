@@ -6,6 +6,8 @@ import { getTableDataApi } from '../../service/modules/todo'
 import { useCallback } from 'react'
 import { useEffect } from 'react'
 
+import { useTable } from '../../hooks/useTable'
+
 const tableColumns = [
   {
     title: 'ID',
@@ -39,7 +41,6 @@ const tableColumns = [
     title: '操作',
     dataIndex: 'id',
     render: (id, row) => {
-      console.log(id, row)
       return (
         <Space size="middle">
           <a>修改</a>
@@ -52,36 +53,18 @@ const tableColumns = [
 
 const TodoTable = () => {
 
-  const [ tableData, setTableData ] = useState([])
-  const [ pageData, setPageData ] = useState({
-    pageNum: 1,
-    pageSize: 10,
-    total: 0
+
+  const {
+    tableData,
+    loading,
+    getTableData,
+    pageData
+  } = useTable({
+    apiFun: getTableDataApi
   })
-  const [ loading, setLoading ] = useState(false)
 
-
-  const getTableData = useCallback(async () => {
-    try {
-      const params = {
-        pageNum: pageData.pageNum,
-        pageSize: pageData.pageSize
-      }
-      setLoading(true)
-      const { list, total } = await getTableDataApi(params)
-      setTableData(list)
-      setPageData({
-        ...pageData,
-        total: total
-      })
-    } catch (e) {
-      console.error(e)
-    }
-    setLoading(false)
-  }, [pageData.pageNum, pageData.pageSize])
 
   useEffect(() => {
-    console.log('getTableData')
     getTableData()
   }, [getTableData])
   
@@ -91,7 +74,8 @@ const TodoTable = () => {
         rowKey="id"
         columns={tableColumns}
         dataSource={tableData}
-        loading={loading}></Table>
+        loading={loading}
+        pagination={pageData}></Table>
     </div>
   )
 }
