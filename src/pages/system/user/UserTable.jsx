@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import './userTable.scss'
 import { Table, Space, Tag } from 'antd'
 import SearchForm from '../../../components/searchForm/SearchForm'
 import { getTableDataApi } from '../../../service/modules/user'
@@ -91,7 +90,6 @@ const UserTable = () => {
       }
       table = {
         <Table
-          className="table"
           rowKey="id"
           columns={tableColumns}
           dataSource={tableData}
