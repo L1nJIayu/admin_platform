@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { Menu } from 'antd'
 
-import { menu_routes } from '../router/routes'
+import { menu_routes } from '../../router/routes'
 
 
 const getMenuList = (routes, beforeKey='') => {

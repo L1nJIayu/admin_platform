@@ -5,7 +5,8 @@ import 'normalize.css'
 import './styles/common.scss'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
+  //   <App></App>
+  // </StrictMode>
     <App></App>
-  </StrictMode>
 )

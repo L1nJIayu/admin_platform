@@ -5,10 +5,10 @@ import { usePagination } from './usePagination'
 export function useTable(options) {
   
   const {
-    apiFun,
-    searchParams = {}
+    apiFun
   } = options
 
+  const [ searchParams, setSearchParams ] = useState({})
   const [ tableData, setTableData ] = useState([])
   const [ loading, setLoading ] = useState(false)
   const {
@@ -16,13 +16,24 @@ export function useTable(options) {
     setPageData
   } = usePagination()
 
-  const getTableData = useCallback(async () => {
+  const getTableData = useCallback(async (newSearchParams) => {
     try {
+
+      if(newSearchParams) {
+        setSearchParams(newSearchParams)
+      }
+
+      newSearchParams
+        ? setSearchParams(newSearchParams)
+        : (newSearchParams = {})
+
       const params = {
         pageNum: pageData.current,
         pageSize: pageData.pageSize,
-        ...searchParams
+        ...searchParams,
+        ...newSearchParams
       }
+
       setLoading(true)
       const { list, total } = await apiFun(params)
       setTableData(list)
@@ -36,11 +47,22 @@ export function useTable(options) {
     setLoading(false)
   }, [pageData.current, pageData.pageSize])
 
+  const onPageChange = useCallback((page, pageSize) => {
+    setPageData({
+      ...pageData,
+      current: page,
+      pageSize
+    })
+  }, [pageData])
+
   return {
     tableData,
     setTableData,
     getTableData,
     loading,
-    pageData
+    pagination: {
+      ...pageData,
+      onChange: onPageChange
+    }
   }
 }

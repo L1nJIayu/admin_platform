@@ -1,10 +1,23 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 import './userTable.scss'
 import { Table, Space, Tag } from 'antd'
 import SearchForm from '../../../components/searchForm/SearchForm'
-import { getTableDataApi } from '../../service/modules/todo'
+import { getTableDataApi } from '../../../service/modules/user'
+import { useTable } from '../../../hooks/useTable'
+import { useCallback } from 'react'
+
+import TableLayout from '../../../layout/table/TableLayout'
 
 
+const userStatusOptions = [
+  { label: '冻结', value: 0 },
+  { label: '可用', value: 1 },
+]
+const searchFormList = [
+  { label: '用户名', prop: 'username', type: 'text' },
+  { label: '昵称', prop: 'nickname', type: 'text' },
+  { label: '状态', prop: 'status', type: 'select', options: userStatusOptions },
+]
 const tableColumns = [
   {
     title: 'ID',
@@ -34,7 +47,7 @@ const tableColumns = [
   },
   {
     title: '创建时间',
-    dataIndex: 'createDateTime'
+    dataIndex: 'createAt'
   },
   {
     title: '操作',
@@ -52,47 +65,40 @@ const tableColumns = [
 
 const UserTable = () => {
 
-  const [ tableData, setTableData ] = useState([])
-  const [ pageData, setPageData ] = useState({
-    pageNum: 1,
-    pageSize: 10,
-    total: 0
+  const {
+    tableData,
+    getTableData,
+    pagination,
+    loading,
+  } = useTable({
+    apiFun: getTableDataApi
   })
-  const [ loading, setLoading ] = useState(false)
-
-
-  const getTableData = useCallback(async () => {
-    try {
-      const params = {
-        pageNum: pageData.pageNum,
-        pageSize: pageData.pageSize
-      }
-      setLoading(true)
-      const { list, total } = await getTableDataApi(params)
-      setTableData(list)
-      setPageData({
-        ...pageData,
-        total: total
-      })
-    } catch (e) {
-      console.error(e)
-    }
-    setLoading(false)
-  }, [pageData.pageNum, pageData.pageSize])
 
   useEffect(() => {
     getTableData()
   }, [getTableData])
+
+  const handleSearch = useCallback((formData) => {
+    getTableData(formData)
+  })
   
   return (
-    <div className="todo_table">
-      <SearchForm />
-      <Table
-        rowKey="id"
-        columns={tableColumns}
-        dataSource={tableData}
-        loading={loading}></Table>
-    </div>
+    <TableLayout
+      search = {
+        <SearchForm
+          formList={searchFormList}
+          onSearch={handleSearch}/>
+      }
+      table = {
+        <Table
+          className="table"
+          rowKey="id"
+          columns={tableColumns}
+          dataSource={tableData}
+          loading={loading}
+          pagination={pagination} />
+      }
+    />
   )
 }
 

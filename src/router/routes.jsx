@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons'
 
 import Login from '../pages/login/Login'
-import Layout from '../layout/Layout'
+import Layout from '../layout/base/Layout'
 import LoadingMask from '../components/loadingMask/LoadingMask'
 import { Suspense } from 'react'
 
