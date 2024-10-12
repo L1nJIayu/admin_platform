@@ -1,6 +1,8 @@
 # admin_platform
 基于React、Antd的后台管理平台
 
+![image-20241012175100659](./README.assets/image-20241012175100659.png)
+
 ## 主要练习内容
 
 1. 表格页相关组件及对应hooks实现和开发
