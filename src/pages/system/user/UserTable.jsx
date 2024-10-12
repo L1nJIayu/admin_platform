@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import './userTable.scss'
-
 import { Table, Space, Tag } from 'antd'
+import SearchForm from '../../../components/searchForm/SearchForm'
 import { getTableDataApi } from '../../service/modules/todo'
-import { useCallback } from 'react'
-import { useEffect } from 'react'
+
 
 const tableColumns = [
   {
@@ -87,6 +86,7 @@ const UserTable = () => {
   
   return (
     <div className="todo_table">
+      <SearchForm />
       <Table
         rowKey="id"
         columns={tableColumns}
