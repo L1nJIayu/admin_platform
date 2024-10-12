@@ -12,10 +12,11 @@
     padding: 12px;
     margin-top: 12px;
     .table_layout_actions {
-      
+      display: flex;
+      flex-flow: row-reverse nowrap;
     }
     .table_layout_table {
-      
+      margin-top: 12px;
     }
 
   }

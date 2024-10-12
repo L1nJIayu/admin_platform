@@ -1,0 +1,1 @@
+export * as userDictionary from './modules/user'
